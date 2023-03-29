@@ -107,9 +107,9 @@ class Tableau:
         basis = [-1 for _ in range(rows_n -1)]
         for c in range(cols_n - 1):
             column = self.table[:,c]
-            belongs_to_basis = math.isclose(column.min(), 0.0, eps) \
-                           and math.isclose(column.max(), 1.0, eps) \
-                           and math.isclose(column.sum(), 1.0, eps)
+            belongs_to_basis = math.isclose(column.min(), 0.0, abs_tol = eps) \
+                           and math.isclose(column.max(), 1.0, abs_tol = eps) \
+                           and math.isclose(column.sum(), 1.0, abs_tol = eps)
             if belongs_to_basis:
                 row = np.where(column == 1.0)[0][0]
                 # [row-1] because we ignore the cost variable in the basis
