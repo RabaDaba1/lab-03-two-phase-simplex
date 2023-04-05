@@ -181,7 +181,10 @@ class Solver:
         #       tip 2. use `tableau.extract_assignment` or `tableau.extract_basis`
         #           - `Variable` class has an `index` attribute, e.g. you may use
         #             `assignment[var.index]` to get value of the variable `var` in the assignment 
-
+        assignment = tableau.extract_assignment()
+        for var in self._artificial:
+            if assignment[var.index] > 0:
+                return True
         
         return False
 
