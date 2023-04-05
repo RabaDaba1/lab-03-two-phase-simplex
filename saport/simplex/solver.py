@@ -128,20 +128,24 @@ class Solver:
         return surpluses 
 
     def _add_artificial_variables(self, model: ssmod.Model):
-        artificial_variables: Dict[sseexp.Variable, ssecon.Constraint] = dict()
         # TODO: add artificial variables to the model.
         #      tip 1. you may base your code on the methods: _add_slack_variables/_add_surplus_variable 
         #      tip 2. artificial variables have to be added only to the constraints without slacks
         #             - self._slacks.values() is a list of constraints where the slacks have been added
         #             - to check if a given constraint is in the list, compare its index with their indices
         #               (constraint class has an `index` attribute, you may use, e.g. c1.index == c2.index)
-        for constraint in model.constraints:
-            artificial_var = model.create_variable(f"R{constraint.index}")
+        artificial_variables: Dict[sseexp.Variable, ssecon.Constraint] = dict()
 
-            artificial_variables[artificial_var] = constraint
-            
-            constraint.expression += artificial_var
-            model.objective.expression += artificial_var
+        with_slack: list[int] = [constraint.index for constraint in self._slacks.values()]
+        
+        for constraint in model.constraints:
+            if constraint.index not in with_slack:
+                artificial_var = model.create_variable(f"R{constraint.index}")
+
+                artificial_variables[artificial_var] = constraint
+                
+                constraint.expression += artificial_var
+                model.objective.expression += artificial_var
 
         return artificial_variables
 
