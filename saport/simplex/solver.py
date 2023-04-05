@@ -135,11 +135,13 @@ class Solver:
         #             - self._slacks.values() is a list of constraints where the slacks have been added
         #             - to check if a given constraint is in the list, compare its index with their indices
         #               (constraint class has an `index` attribute, you may use, e.g. c1.index == c2.index)
-
         for constraint in model.constraints:
             artificial_var = model.create_variable(f"s{constraint.index}")
+
             artificial_variables[artificial_var] = constraint
-            constraint.expression = constraint.expression + artificial_var
+            
+            constraint.expression += artificial_var
+            model.objective.expression += artificial_var
 
         return artificial_variables
 
