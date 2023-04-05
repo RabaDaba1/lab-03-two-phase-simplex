@@ -135,6 +135,12 @@ class Solver:
         #             - self._slacks.values() is a list of constraints where the slacks have been added
         #             - to check if a given constraint is in the list, compare its index with their indices
         #               (constraint class has an `index` attribute, you may use, e.g. c1.index == c2.index)
+
+        for constraint in model.constraints:
+            artificial_var = model.create_variable(f"s{constraint.index}")
+            artificial_variables[artificial_var] = constraint
+            constraint.expression = constraint.expression + artificial_var
+
         return artificial_variables
 
     def _basic_initial_tableau(self, model: ssmod.Model):
@@ -148,7 +154,7 @@ class Solver:
         #       - then fix the tableau basis (tip. artificial variables should be basic) using simple transformations; 
         #         like in the pivot: subtract rows / multiply by constant
         #       tip 1. you may look at the _basic_initial_tableau on how to create a tableau
-        table = None
+        table = 0
         return sstab.Tableau(model, table)
 
     def _artifical_variables_are_positive(self, tableau: sstab.Tableau):
