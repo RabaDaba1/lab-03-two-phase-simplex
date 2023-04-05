@@ -136,7 +136,7 @@ class Solver:
         #             - to check if a given constraint is in the list, compare its index with their indices
         #               (constraint class has an `index` attribute, you may use, e.g. c1.index == c2.index)
         for constraint in model.constraints:
-            artificial_var = model.create_variable(f"s{constraint.index}")
+            artificial_var = model.create_variable(f"R{constraint.index}")
 
             artificial_variables[artificial_var] = constraint
             
