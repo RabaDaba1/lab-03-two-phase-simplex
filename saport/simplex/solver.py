@@ -198,7 +198,7 @@ class Solver:
         #          in the first phase tableau also basic in the new tableau
         
         # 1) Delete columns with artificial variables
-        artificial_var_columns = [artificial_var for artificial_var in self._artificial]
+        artificial_var_columns = [artificial_var.index for artificial_var in self._artificial]
         new_table = np.delete(tableau.table, artificial_var_columns, axis=1)
 
         # 2) Restore original objective row
