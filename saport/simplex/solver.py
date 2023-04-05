@@ -207,8 +207,8 @@ class Solver:
         # 3) 
         columns = np.column_stack(new_table[1:])
         for i, col in enumerate(columns):
-            if (col.amax(), col.amax()) == (0, 1):
-                new_table[0] -= new_table[0, i] * new_table[col.argmax() + 1]
+            if (np.amax(col), np.amin(col)) == (0, 1):
+                new_table[0] -= new_table[0, i] * new_table[np.argmax(col) + 1]
         
         return sstab.Tableau(tableau.model, new_table)
 
