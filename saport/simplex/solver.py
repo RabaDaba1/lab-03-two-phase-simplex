@@ -137,7 +137,7 @@ class Solver:
         artificial_variables: Dict[sseexp.Variable, ssecon.Constraint] = dict()
 
         with_slack: list[int] = [constraint.index for constraint in self._slacks.values()]
-        
+
         for constraint in model.constraints:
             if constraint.index not in with_slack:
                 artificial_var = model.create_variable(f"R{constraint.index}")
@@ -160,7 +160,19 @@ class Solver:
         #       - then fix the tableau basis (tip. artificial variables should be basic) using simple transformations; 
         #         like in the pivot: subtract rows / multiply by constant
         #       tip 1. you may look at the _basic_initial_tableau on how to create a tableau
-        table = 0
+        tableau: sstab.Tableau = self._basic_initial_tableau(model)
+        table = tableau.table
+
+        # zero objective row
+        table[0] = 0
+        
+        # add coefficient only to artificial variables
+        for variable in self._artificial:
+            table[0, variable.index] = 1        
+
+        for constraint_with_artificial in self._artificial.values():
+            table[0] -= table[constraint_with_artificial.index + 1]
+
         return sstab.Tableau(model, table)
 
     def _artifical_variables_are_positive(self, tableau: sstab.Tableau):
@@ -169,6 +181,8 @@ class Solver:
         #       tip 2. use `tableau.extract_assignment` or `tableau.extract_basis`
         #           - `Variable` class has an `index` attribute, e.g. you may use
         #             `assignment[var.index]` to get value of the variable `var` in the assignment 
+
+        
         return False
 
     def _restore_initial_tableau(self, tableau: sstab.Tableau, model: ssmod.Model):
