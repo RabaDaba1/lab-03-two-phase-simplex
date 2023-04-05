@@ -163,13 +163,14 @@ class Solver:
         tableau: sstab.Tableau = self._basic_initial_tableau(model)
         table = tableau.table
 
-        # zero objective row
+        # 1) Zero the objective row
         table[0] = 0
         
-        # add coefficient only to artificial variables
+        # 2) Add coefficient =1 only to artificial variables
         for variable in self._artificial:
             table[0, variable.index] = 1        
 
+        # 3) Fixing basis to by R1, R2, ...
         for constraint_with_artificial in self._artificial.values():
             table[0] -= table[constraint_with_artificial.index + 1]
 
@@ -195,7 +196,20 @@ class Solver:
         #       3. similarly to the way we have zeroed the artificial variables in `_presolve_initial_tableau`,
         #          now we have to transform the tableau to make the basic variables (basic = being part of the basis) 
         #          in the first phase tableau also basic in the new tableau
-        new_table = None
+        
+        # 1) Delete columns with artificial variables
+        artificial_var_columns = [artificial_var for artificial_var in self._artificial]
+        new_table = np.delete(tableau.table, artificial_var_columns, axis=1)
+
+        # 2) Restore original objective row
+        new_table[0] = np.array((-1 * model.objective.expression).coefficients(model) + [0.0])
+
+        # 3) 
+        columns = np.column_stack(new_table[1:])
+        for i, col in enumerate(columns):
+            if (col.amax(), col.amax()) == (0, 1):
+                new_table[0] -= new_table[0, i] * new_table[col.argmax() + 1]
+        
         return sstab.Tableau(tableau.model, new_table)
 
     def _create_solution(self, assignment: List[float], model: ssmod.Model, initial_tableau: sstab.Tableau, tableau: sstab.Tableau):
