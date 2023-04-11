@@ -5,7 +5,7 @@ I'm happy to announce that you've managed to get **9** out of 10 points for this
 
 There still exist some issues that should be addressed before the deadline: **2023-04-19 07:59:00 CEST (+0200)**. For further details, please refer to the following list:
 
-<details><summary>[1p] Example 05 should be infeasible &gt;&gt; solver has found a solution for the problem, but it should not have</summary></details>
+<details><summary>[1p] Example 05 should be infeasible &gt;&gt; Tested code raises NameError in example_05_infeasible.py:17</summary></details>
 
 -----------
 I remain your faithful servant\
