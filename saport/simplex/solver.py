@@ -205,11 +205,11 @@ class Solver:
         new_table[0] = np.array((-1 * model.objective.expression).coefficients(model) + [0.0])
 
         # 3) 
-         for col_idx in range(new_table.shape[1]):
-            col = new_table[:, col_idx]
-            if (np.amax(col), np.amin(col)) == (0, 1):
+        columns = np.column_stack(new_table[1:])
+        for i, col in enumerate(columns):
+            if (np.amax(col), np.amin(col)) == (1, 0):
                 new_table[0] -= new_table[0, i] * new_table[np.argmax(col) + 1]
-            
+        
         return sstab.Tableau(tableau.model, new_table)
 
     def _create_solution(self, assignment: List[float], model: ssmod.Model, initial_tableau: sstab.Tableau, tableau: sstab.Tableau):
