@@ -15,8 +15,7 @@ def create_model() -> Model:
     model.add_constraint(x1 + 2*x2 <= 20)
     model.add_constraint(x1 + x2 == 10)
 
-    model.minimize(2*x1 + x2)
-
+    model.maximize(2*x1 + x2)
 
     return model
 
