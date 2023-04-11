@@ -14,7 +14,7 @@ def create_model() -> Model:
 
     model.add_constraint(2*x1 >= 1200)
     model.add_constraint(x1 + x2 <= 400)
-    mode.add_constraint(2*x1+3/2*x2 >= 900)
+    model.add_constraint(2*x1+(3/2)*x2 >= 900)
 
     model.maximize(-2*x1 - 3*x2)
     return model
@@ -26,6 +26,7 @@ def run():
     # TIP: you may use other solvers (e.g. https://online-optimizer.appspot.com)
     #      to find the correct solution
     solution = model.solve()
+
     if solution.is_bounded:
         raise AssertionError("Your algorithm found a solution to an unbounded problem. This shouldn't happen...")
     else:
