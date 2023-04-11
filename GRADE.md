@@ -1,12 +1,11 @@
 Dear Student,
 
-I'm happy to announce that you've managed to get **6** out of 10 points for this assignment.
-<details><summary>You have already managed to pass 3 tests, so that is encouraging!</summary>&emsp;☑&nbsp;[2p] Solver properly adds artificial variables<br>&emsp;☑&nbsp;[2p] Solver properly presolves initial tableau<br>&emsp;☑&nbsp;[2p] Solver should properly checks if art vars positive</details>
+I'm happy to announce that you've managed to get **7** out of 10 points for this assignment.
+<details><summary>You have already managed to pass 4 tests, so that is encouraging!</summary>&emsp;☑&nbsp;[2p] Solver properly adds artificial variables<br>&emsp;☑&nbsp;[2p] Solver properly presolves initial tableau<br>&emsp;☑&nbsp;[2p] Solver should properly checks if art vars positive<br>&emsp;☑&nbsp;[1p] Example 04 finds correct solution</details>
 
 There still exist some issues that should be addressed before the deadline: **2023-04-19 07:59:00 CEST (+0200)**. For further details, please refer to the following list:
 
 <details><summary>[2p] Solver properly restores initial tableau &gt;&gt; solver does not restore initial tableau properly:</summary>- expected:<br>&nbsp;&nbsp;&nbsp;&nbsp;[[  0.           0.           0.          -0.66666667   7.66666667]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[  0.           0.           1.          -1.         101.        ]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[  0.           1.           0.          -0.33333333   2.33333333]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[  1.           0.           0.           0.33333333   0.66666667]]<br>- got:<br>&nbsp;&nbsp;&nbsp;&nbsp;[[ -1.          -3.           0.           0.           0.        ]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[  0.           0.           1.          -1.         101.        ]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[  0.           1.           0.          -0.33333333   2.33333333]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[  1.           0.           0.           0.33333333   0.66666667]]<br>- input:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;basis |       z |      x1 |      x2 |      s0 |      s1 |      R1 |      R2 |       b<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;z |   1.000 |   0.000 |   0.000 |   0.000 |   0.000 |   1.000 |   1.000 |   0.000<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s0 |   0.000 |   0.000 |   0.000 |   1.000 |  -1.000 |   1.000 |   0.000 | 101.000<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x2 |   0.000 |   0.000 |   1.000 |   0.000 |  -0.333 |   0.333 |   0.667 |   2.333<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x1 |   0.000 |   1.000 |   0.000 |   0.000 |   0.333 |  -0.333 |   0.333 |   0.667</details>
-<details><summary>[1p] Example 04 finds correct solution &gt;&gt; model does not have constraints</summary></details>
 <details><summary>[1p] Example 05 should be infeasible &gt;&gt; model does not have constraints</summary></details>
 
 -----------
